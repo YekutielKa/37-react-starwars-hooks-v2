@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Navigation from "./Navigation";
+import {characters, StarWarsContext} from "../utils/constants";
 
 const Header = () => {
+
+    const {hero} = useContext(StarWarsContext)
     return (
         <header>
             <Navigation />
-            <h1 className="text-center py-1">Luke Skywalker</h1>
+            <h1 className="text-center py-1">{characters[hero].name}</h1>
         </header>
     );
 };

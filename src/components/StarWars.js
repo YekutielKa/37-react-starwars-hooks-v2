@@ -1,21 +1,32 @@
-import React, {Component} from 'react';
-import {starWarsInfo} from "../utils/constants";
+import React, { Component, useContext, useEffect } from "react";
+import {
+  characters,
+  defaultHero,
+  navNames,
+  StarWarsContext,
+  starWarsInfo,
+} from "../utils/constants";
 import style from "../css/farGalaxy.module.css";
+import { useNavigate, useParams } from "react-router-dom";
 
-class StarWars extends Component{
-    componentWillUnmount() {
-        console.log('StarWars unmounted');
+const StarWars = () => {
+  const { hero: heroId } = useParams();
+  const { changeHero } = useContext(StarWarsContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!characters[heroId]) {
+      navigate(`/${navNames[2].route}/${defaultHero}`);
+      return;
     }
-    componentDidMount() {
-        console.log('StarWars mounted');
-    }
-    render() {
-        return (
-                <div className={style.farGalaxy}>
-                    <p>{starWarsInfo}</p>
-                </div>
-            );
-    }
-}
+    changeHero(heroId);
+  }, [heroId]);
+
+  return (
+    <div className={style.farGalaxy}>
+      <p>{starWarsInfo}</p>
+    </div>
+  );
+};
 
 export default StarWars;
